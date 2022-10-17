@@ -22,6 +22,12 @@
       
         <!-- 360-degree image. -->
         <a-sky id="image-360" radius="10" src="#galaxy"></a-sky>
+
+        <a-box position="0 1.5 -8" 
+          rotation="0 45 0" 
+          color="#4CC3D9" 
+          animation="property: rotation; to: 180 360 180; dur: 8000; easing: linear; loop: true"
+          geometry="primitive: box"></a-box>
       
       </a-scene>
 </body>
