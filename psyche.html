@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Psyche using AR.js</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <!-- <script src="https://unpkg.com/aframe-event-set-component@5/dist/aframe-event-set-component.min.js"></script>
     <script src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"></script>
@@ -28,7 +29,11 @@
           color="#4CC3D9" 
           animation="property: rotation; to: 180 360 180; dur: 8000; easing: linear; loop: true"
           geometry="primitive: box"></a-box>
-      
+          <a-text value="Welcome to Psyche Mission" 
+          font="https://cdn.aframe.io/fonts/SourceCodePro.fnt"
+          position="1 1.5 -5"
+          side="double"
+          letter-spacing="4"></a-text>
       </a-scene>
 </body>
 </html>
