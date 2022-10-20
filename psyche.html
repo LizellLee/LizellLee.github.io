@@ -38,6 +38,13 @@
       }
       `
     })
+
+    AFRAME.registerComponent('alpha-test', {
+      dependencies: ['material'],
+      init: function () {
+        this.el.getObject3D('mesh').material.alphaTest = 0.5;
+      }
+    });
   </script>
     <a-scene>
         <a-assets>
@@ -47,6 +54,8 @@
           <img id="earthTexture" src="./img/earth.jpeg">
           <img id="marsTexture" src="./img/mars.jpg">
           <img id="nasa_logo" src="./img/nasa-logo.png">
+          <img id="hudRing" src="./img/hud-ring.png">
+          <img id="transpImage" crossorigin="anonymous" src="http://ekladata.com/hXTGfWnZm170W274zDRObDlqOlc.png">
         </a-assets>
       
         <!-- 360-degree image. -->
@@ -82,6 +91,11 @@
                     animation="property: rotation; to: 180 360 0; dur: 100000; easing: linear; loop: true"
                     color="#FFFFFF" 
                     radius="0.5"></a-sphere>
+
+          <a-camera>
+            <!-- The object with the same transform as the camera + some offset -->
+            <a-image src="#hudRing" position="0 0 -0.6" transparent="true" alpha-test="0.5"></a-image>
+          </a-camera>
       </a-scene>
 </body>
 </html>
