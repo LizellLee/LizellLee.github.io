@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psyche using AR.js</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+    <!-- <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/aframe-event-set-component@5/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-template-component@3.2.1/dist/aframe-template-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-proxy-event-component@2.1.0/dist/aframe-proxy-event-component.min.js"></script> -->
+
+</head>
+<body style="margin: 0; padding: 0;">
+  <script>
+    AFRAME.registerShader('earthShade',{
+      schema: {
+        color: {type: 'color', is: 'uniform'},
+        opacity: {type: 'number', is: 'uniform'}
+      },
+      vertexShader: 
+      `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+      }`,
+      fragmentShader:
+      `
+      uniform sampler2D earthTexture;
+      varying vec2 vUv;
+
+      void main() {
+        gl_FragColor = texture2D(earthTexture, vUv);
+      }
+      `
+    })
+  </script>
+    <a-scene>
+        <a-assets>
+          <audio id="click-sound" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
+          <!-- Images. -->
+          <img id="galaxy" src="./img/galaxy.jpeg">
+          <img id="earthTexture" src="./img/earth.jpeg">
+          <img id="marsTexture" src="./img/mars.jpg">
+          <img id="nasa_logo" src="./img/nasa-logo.png">
+          <img id="hudRing" src="./img/hud-ring.png">
+          <img id="hyperspeed" src="https://media.giphy.com/media/TZf4ZyXb0lXXi/giphy.gif">
+        </a-assets>
+      
+        <!-- 360-degree image. -->
+        <a-sky id="image-360" src="#galaxy"></a-sky>
+
+        <a-box position="0 1.5 -8" 
+          rotation="0 45 0" 
+          color="#4CC3D9" 
+          animation="property: rotation; to: 180 360 180; dur: 8000; easing: linear; loop: true"
+          geometry="primitive: box"></a-box>
+          <a-text value="Welcome to Psyche Mission" 
+          font="https://cdn.aframe.io/fonts/SourceCodePro.fnt"
+          position="1 1.5 -5"
+          side="double"
+          letter-spacing="4"></a-text>
+          <a-sphere position="-4 -2 -2"
+                    src="./img/earth.jpeg" 
+                    repeat="1 1" 
+                    normal-map="#earthTexture"
+                    normal-texture-repeat="1 1"
+                    normal-scale="3 1"
+                    roughness="0.7"
+                    animation="property: rotation; to: 0 360 0; dur: 200000; easing: linear; loop: true"
+                    color="#FFFFFF" 
+                    radius="3"></a-sphere>
+          <a-sphere position="6 4 -5"
+                    src="./img/mars.jpg" 
+                    repeat="1 1" 
+                    normal-map="#marsTexture"
+                    normal-texture-repeat="1 1"
+                    normal-scale="3 1"
+                    roughness="0.7"
+                    animation="property: rotation; to: 180 360 0; dur: 100000; easing: linear; loop: true"
+                    color="#FFFFFF" 
+                    radius="0.5"></a-sphere>
+
+          <a-camera>
+            <!-- The object with the same transform as the camera + some offset -->
+            <a-image src="#hudRing" position="0 0 -1.5" transparent="true" alpha-test="0.5"></a-image>
+            <a-entity src="#hyperspeed" position="0 0 -0.5" geometry="primitive:plane;" material="shader:gif; src:url(https://media.giphy.com/media/TZf4ZyXb0lXXi/giphy.gif)"></a-entity>
+          </a-camera>
+      </a-scene>
+</body>
+</html>
